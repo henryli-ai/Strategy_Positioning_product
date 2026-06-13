@@ -132,6 +132,96 @@ td .cap{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
 .cap-step span{font-size:12.5px;color:var(--body)}
 .cap-step.arrow{flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:none;border:none;font-size:24px;font-weight:800;color:var(--accent);padding:0 4px}
 
+/* ---------- industry panel ---------- */
+.hero-band{
+  background:linear-gradient(135deg,#1A1530 0%,#2E2154 55%,#4A2FD0 100%);
+  border-radius:20px;padding:48px 44px;margin-top:40px;color:#fff;position:relative;overflow:hidden;
+}
+.hero-band::after{content:'';position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(140,110,255,.35),transparent 70%)}
+.hero-band .hk{font-family:'Sen',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#C9BCF7;font-weight:700;margin-bottom:16px}
+.hero-band h2{font-size:clamp(24px,3.6vw,40px);font-weight:900;line-height:1.4;position:relative}
+.hero-band h2 em{font-style:normal;color:#C9BCF7}
+.hero-band p{margin-top:16px;font-size:15px;color:#D8D3EC;max-width:680px;position:relative}
+.hero-band .flow-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;position:relative}
+.hero-band .ft{font-size:13px;font-weight:600;background:rgba(255,255,255,.12);border:1px solid rgba(201,188,247,.3);border-radius:99px;padding:7px 16px;color:#fff}
+.hero-band .ft.arr{background:none;border:none;color:#9D8FE0;font-weight:800;padding:7px 2px}
+
+/* how it works */
+.how{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:14px;align-items:stretch;margin-top:8px}
+.how-step{border:1px solid var(--hairline);border-radius:16px;padding:26px 22px;background:var(--paper)}
+.how-step .n{font-family:'Sen',sans-serif;font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.18em;margin-bottom:10px}
+.how-step h4{font-size:16px;font-weight:900;margin-bottom:7px}
+.how-step p{font-size:13px;color:var(--muted)}
+.how-arr{display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--accent);font-weight:800}
+.how-note{margin-top:16px;text-align:center;font-size:13.5px;color:var(--accent-deep);font-weight:700}
+
+/* industry selector */
+.ind-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.ind-card{border:1px solid var(--hairline);border-radius:14px;padding:22px;cursor:pointer;transition:all .15s;background:var(--paper);text-align:left}
+.ind-card:hover{border-color:#C9BCF7}
+.ind-card.active{background:var(--lavender);border-color:var(--accent);box-shadow:0 4px 16px rgba(108,76,241,.14)}
+.ind-card.soon{opacity:.5;cursor:not-allowed}
+.ind-card .ico{font-size:22px;margin-bottom:8px}
+.ind-card h4{font-size:16px;font-weight:900;display:flex;align-items:center;gap:8px}
+.ind-card .badge{font-size:10px;font-weight:700;background:#E9E6F3;color:var(--muted);border-radius:99px;padding:2px 8px;letter-spacing:.05em}
+.ind-card.active .badge{background:var(--accent);color:#fff}
+.ind-card p{font-size:12.5px;color:var(--muted);margin-top:6px}
+.hilite-band{background:var(--lavender);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin-top:20px;font-size:15px;font-weight:700;color:var(--accent-deep);line-height:1.6}
+
+/* scenario accordion */
+.scn-list{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.scn{border:1px solid var(--hairline);border-radius:14px;overflow:hidden;background:var(--paper)}
+.scn.feat{border-color:#D5C9F8}
+.scn-head{display:flex;align-items:center;gap:14px;padding:20px 22px;cursor:pointer;transition:background .15s}
+.scn-head:hover{background:#FAF9FD}
+.scn-num{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--lavender);color:var(--accent-deep);font-family:'Sen',sans-serif;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+.scn.feat .scn-num{background:var(--accent);color:#fff}
+.scn-title{flex:1}
+.scn-title h4{font-size:16px;font-weight:900;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.scn-title .feat-tag{font-size:10.5px;font-weight:800;background:var(--accent);color:#fff;border-radius:99px;padding:2px 10px;letter-spacing:.04em}
+.scn-title p{font-size:12.5px;color:var(--muted);margin-top:3px}
+.scn-roi{flex:0 0 auto;font-size:12.5px;font-weight:800;color:var(--accent-deep);background:var(--lavender);border-radius:99px;padding:6px 14px;white-space:nowrap}
+.scn-chev{flex:0 0 auto;color:var(--muted);transition:transform .2s}
+.scn.open .scn-chev{transform:rotate(180deg)}
+.scn-body{display:none;padding:0 22px 24px}
+.scn.open .scn-body{display:block}
+.flow{display:grid;grid-template-columns:1fr auto 1.3fr auto 1fr;gap:12px;align-items:stretch;margin-top:6px}
+.flow-col{border-radius:12px;padding:16px 16px;border:1px solid var(--hairline)}
+.flow-col.in{background:#FAFAFC}
+.flow-col.agent{background:var(--lavender);border-color:#D5C9F8}
+.flow-col.out{background:#FBFAFE}
+.flow-col .lbl{font-family:'Sen','Noto Sans TC',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.flow-col.in .lbl{color:var(--muted)}
+.flow-col.agent .lbl{color:var(--accent-deep)}
+.flow-col.out .lbl{color:var(--accent-deep)}
+.flow-col ul{list-style:none}
+.flow-col li{font-size:12.5px;padding-left:14px;position:relative;margin-bottom:6px;color:var(--body);line-height:1.5}
+.flow-col li::before{content:'';position:absolute;left:0;top:.55em;width:4px;height:4px;border-radius:50%;background:#B7A6F4}
+.flow-col.agent li{counter-increment:step;padding-left:24px}
+.flow-col.agent li::before{content:counter(step);background:var(--accent);color:#fff;width:16px;height:16px;border-radius:50%;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;top:.2em;line-height:1}
+.flow-col.agent ul{counter-reset:step}
+.flow-arr{display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--accent);font-weight:800}
+.out-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.out-tag{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 9px;background:#fff;border:1px solid #D5C9F8;color:var(--accent-deep)}
+
+/* final cta */
+.cta-band{background:linear-gradient(135deg,#4A2FD0 0%,#6C4CF1 100%);border-radius:20px;padding:44px;margin-top:40px;text-align:center;color:#fff}
+.cta-band h2{font-size:clamp(22px,3vw,32px);font-weight:900;line-height:1.4}
+.cta-band p{margin-top:12px;font-size:14.5px;color:#E4DEF7}
+.cta-btns{display:flex;gap:14px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.cta-btn{font-family:'Sen','Noto Sans TC',sans-serif;font-size:14px;font-weight:700;border-radius:99px;padding:13px 28px;cursor:pointer;border:none}
+.cta-btn.primary{background:#fff;color:var(--accent-deep)}
+.cta-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.4)}
+
+@media(max-width:900px){
+  .how{grid-template-columns:1fr}
+  .how-arr{transform:rotate(90deg);padding:4px 0}
+  .ind-cards{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .flow-arr{transform:rotate(90deg);padding:2px 0}
+  .scn-roi{display:none}
+}
+
 .detail-toggle{
   display:inline-flex;align-items:center;gap:8px;margin-top:22px;cursor:pointer;
   font-family:'Sen','Noto Sans TC',sans-serif;font-size:13px;font-weight:700;
@@ -209,6 +299,7 @@ footer .tagline{font-size:13px;color:var(--accent-deep);font-weight:700;letter-s
   <div class="tabs">
     <button class="tab active" data-panel="p1">產品線切分</button>
     <button class="tab" data-panel="p2">市場全景與競爭分析</button>
+    <button class="tab" data-panel="p3">產業應用場景</button>
   </div>
 
   <!-- ============================================================ -->
@@ -764,6 +855,381 @@ footer .tagline{font-size:13px;color:var(--accent-deep);font-weight:700;letter-s
 
   </div><!-- /panel2 -->
 
+  <!-- ============================================================ -->
+  <!-- PANEL 3: INDUSTRY APPLICATIONS                                -->
+  <!-- ============================================================ -->
+  <div class="panel" id="p3">
+
+  <div class="hero-band">
+    <div class="hk">Industry Solutions · 產業應用</div>
+    <h2>把文件數據，<br>變成會<em>工作</em>的 AI 員工。</h2>
+    <p>不是聊天機器人。文件上傳 → 自動生成專屬 AI 代理 → 直接完成工作。報價、BOM、品保、採購、排程，交件而不只是回答。</p>
+    <div class="flow-tags">
+      <span class="ft">文件上傳</span>
+      <span class="ft arr">→</span>
+      <span class="ft">生成專屬 AI 代理</span>
+      <span class="ft arr">→</span>
+      <span class="ft">直接完成工作</span>
+    </div>
+  </div>
+
+  <div class="section-title">How It Works｜三步驟，從文件到完工</div>
+  <div class="how">
+    <div class="how-step">
+      <div class="n">STEP 1</div>
+      <h4>拖拉文件</h4>
+      <p>PDF、Excel、圖片、Email——格式不限，掃描件與手寫也吃得下。</p>
+    </div>
+    <div class="how-arr">→</div>
+    <div class="how-step">
+      <div class="n">STEP 2</div>
+      <h4>自動結構化</h4>
+      <p>轉成向量知識 + 結構化資料：OCR、表格還原、料號比對一次到位。</p>
+    </div>
+    <div class="how-arr">→</div>
+    <div class="how-step">
+      <div class="n">STEP 3</div>
+      <h4>生成 AI 代理</h4>
+      <p>代理自動執行任務並產出可直接使用的成果，不是回答而是交件。</p>
+    </div>
+  </div>
+  <div class="how-note">關鍵差異：它不回答問題，它完成工作。</div>
+
+  <div class="section-title">Select Industry｜選擇你的產業</div>
+  <div class="ind-cards">
+    <button class="ind-card active" data-ind="mfg">
+      <div class="ico">🏭</div>
+      <h4>製造業 <span class="badge">8 個場景上線</span></h4>
+      <p>報價、BOM、製程、品保、採購、排程、設備——全鏈路代理</p>
+    </button>
+    <button class="ind-card" data-ind="fin">
+      <div class="ico">🏦</div>
+      <h4>金融業 <span class="badge">8 個場景上線</span></h4>
+      <p>行銷合規、投研報告、法遵對齊、營運洞察——懂合規的代理</p>
+    </button>
+    <div class="ind-card soon">
+      <div class="ico">🛍️</div>
+      <h4>科技零售 <span class="badge">Coming Soon</span></h4>
+      <p>商品文案、會員分群、需求預測、客服自動化</p>
+    </div>
+  </div>
+
+  <div class="ind-group" data-group="mfg">
+  <div class="section-title">Manufacturing Agents｜製造業 8 大應用場景</div>
+  <p class="section-note">每個場景都是一條 <b>Input → Agent → Output</b> 的完整流水線。點擊展開看代理實際做了什麼、產出什麼可直接使用的成果。</p>
+  <div class="scn-list">
+
+    <div class="scn feat open">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">1</div>
+        <div class="scn-title"><h4>高品質報價單生成 Agent <span class="feat-tag">主打</span></h4><p>業務收到客戶 RFQ，需要快速產出專業且準確的報價單</p></div>
+        <div class="scn-roi">2 天 → 10 分鐘</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>客戶 RFQ（Email／PDF／Excel）</li><li>BOM 物料清單</li><li>CAD／規格書</li><li>歷史報價</li><li>原料價格（銅／鋁等）</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>解析詢價規格、數量、交期</li><li>比對歷史報價</li><li>計算材料成本（含市場波動）</li><li>計算加工成本（CNC／沖壓／表面處理）</li><li>套用 margin 規則</li><li>偵測異常報價</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>標準報價單</li><li>成本分析表</li><li>客戶說明版本</li></ul><div class="out-tags"><span class="out-tag">Excel</span><span class="out-tag">PDF</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">2</div>
+        <div class="scn-title"><h4>BOM／料號辨識 + ERP 標準化</h4><p>收到格式混亂或掃描的 BOM，需要轉成 ERP 可用格式</p></div>
+        <div class="scn-roi">掃描件直接入 ERP</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>掃描 PDF／Excel</li><li>手寫文件</li><li>零件照片</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>OCR + 表格還原</li><li>視覺辨識料號</li><li>模糊比對內部料庫</li><li>自動補齊規格（材質、尺寸）</li><li>單位轉換（inch／mm）</li><li>舊料號 mapping 新料號</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>ERP 格式 BOM</li><li>標準料號清單</li><li>異常檢查報告</li></ul><div class="out-tags"><span class="out-tag">ERP</span><span class="out-tag">Excel</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">3</div>
+        <div class="scn-title"><h4>製程 Routing + 工時估算</h4><p>從 CAD 圖與歷史製程，自動生成加工順序與工時</p></div>
+        <div class="scn-roi">CAD → Routing 表</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>CAD 圖</li><li>材料資訊</li><li>歷史製程</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>判斷加工方式（CNC／casting／沖壓）</li><li>生成製程順序</li><li>預估工時</li><li>找出瓶頸</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>Routing 表</li><li>工時預估</li><li>成本分析</li></ul><div class="out-tags"><span class="out-tag">Excel</span><span class="out-tag">PDF</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">4</div>
+        <div class="scn-title"><h4>品質異常（8D 報告）生成</h4><p>從客訴與檢驗數據，自動產出完整 8D 改善報告</p></div>
+        <div class="scn-roi">客訴 → 8D 報告</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>客訴內容</li><li>檢驗報告</li><li>生產數據</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>分類缺陷</li><li>找歷史案例</li><li>分析 root cause（人機料法）</li><li>生成改善措施</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>完整 8D 報告</li><li>改善建議</li><li>預防措施</li></ul><div class="out-tags"><span class="out-tag">PDF</span><span class="out-tag">Word</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">5</div>
+        <div class="scn-title"><h4>瑕疵影像判讀</h4><p>上傳缺陷照片，自動判定類型並對應製程問題</p></div>
+        <div class="scn-roi">照片 → 原因分析</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>缺陷照片</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>視覺分類（刮傷／氣泡／裂紋）</li><li>比對歷史案例</li><li>對應製程問題</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>缺陷判定</li><li>原因分析</li><li>調整建議</li></ul><div class="out-tags"><span class="out-tag">報告</span><span class="out-tag">API</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">6</div>
+        <div class="scn-title"><h4>採購 RFQ + 比價</h4><p>從 BOM 自動發詢價、收集報價並產出比價分析</p></div>
+        <div class="scn-roi">自動發 RFQ → 比價</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>BOM 物料清單</li><li>採購需求</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>自動發 RFQ 給供應商</li><li>收集報價</li><li>格式統一</li><li>分析價格／交期／MOQ</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>比價報告</li><li>推薦供應商</li><li>議價建議</li></ul><div class="out-tags"><span class="out-tag">Excel</span><span class="out-tag">Email</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">7</div>
+        <div class="scn-title"><h4>訂單 → 生產排程</h4><p>從訂單與產能限制，模擬排程並預測交期風險</p></div>
+        <div class="scn-roi">訂單 → 排程表</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>訂單</li><li>設備產能</li><li>人力</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>拆單</li><li>排機台</li><li>模擬排程</li><li>預測延誤</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>排程表</li><li>交期預測</li><li>風險提示</li></ul><div class="out-tags"><span class="out-tag">Excel</span><span class="out-tag">API</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">8</div>
+        <div class="scn-title"><h4>設備維修 + 故障診斷</h4><p>從故障描述與設備手冊，生成維修 SOP 與所需零件</p></div>
+        <div class="scn-roi">故障 → 維修 SOP</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>設備手冊</li><li>維修紀錄</li><li>故障描述</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>判斷故障類型</li><li>比對歷史案例</li><li>生成維修 SOP</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>維修步驟</li><li>所需零件</li><li>預估時間</li></ul><div class="out-tags"><span class="out-tag">SOP</span><span class="out-tag">PDF</span></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div><!-- /group mfg -->
+
+  <div class="ind-group" data-group="fin" style="display:none">
+  <div class="hilite-band">不只是生成內容，而是直接完成金融工作流程——從行銷、投資研究、法遵到營運決策。</div>
+  <div class="section-title">Financial Agents｜金融業 8 大應用場景</div>
+  <p class="section-note">每個場景都是一條 <b>Input → Agent → Output</b> 的完整流水線，且<b>合規內建</b>：禁用詞、揭露條款、風險揭露在生成當下就檢查，不是事後補。</p>
+  <div class="scn-list">
+
+    <div class="scn feat open">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">1</div>
+        <div class="scn-title"><h4>行銷文案 + Campaign 生成 Agent <span class="feat-tag">主打</span></h4><p>快速推出信用卡、基金或保險活動，同時符合金管會規範</p></div>
+        <div class="scn-roi">行銷 + 合規同時完成</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>商品資料（利率、費率、風險等級）</li><li>過去 Campaign 數據（CTR、轉換率）</li><li>客戶分群（年齡、AUM、風險偏好）</li><li>合規規範（禁用詞、揭露條款）</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>分析商品定位與賣點</li><li>依客群生成不同語氣文案</li><li>產出多版本 A/B 測試內容</li><li>自動檢查是否違反法規（避免誤導收益）</li><li>規劃 Campaign（通路、預算、節奏）</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>EDM／SMS／廣告文案</li><li>Campaign 企劃書（含 KPI）</li><li>A/B 測試方案</li></ul><div class="out-tags"><span class="out-tag">文案</span><span class="out-tag">企劃書</span><span class="out-tag">合規檢核</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">2</div>
+        <div class="scn-title"><h4>金融商品企劃 + 市場分析 Agent</h4><p>產品團隊設計新基金、結構型商品或貸款產品</p></div>
+        <div class="scn-roi">市場數據 → 商品企劃</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>市場數據（利率、ETF 趨勢）</li><li>競品商品</li><li>客戶需求</li><li>歷史銷售數據</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>分析市場趨勢（利率、資產流動）</li><li>比較競品差異</li><li>設計商品結構（收益 vs 風險）</li><li>預測市場接受度</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>商品企劃書</li><li>定價策略</li><li>目標客群建議</li></ul><div class="out-tags"><span class="out-tag">企劃書</span><span class="out-tag">PDF</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">3</div>
+        <div class="scn-title"><h4>投資研究報告生成 Agent <span class="feat-tag">高價值</span></h4><p>研究員需快速產出股票、債券或產業分析報告</p></div>
+        <div class="scn-roi">財報 → 完整研報</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>財報（PDF）</li><li>市場數據</li><li>新聞</li><li>歷史研究報告</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>解析財報（收入、EPS、ROE）</li><li>計算關鍵指標</li><li>分析產業趨勢</li><li>生成 Bull／Bear 觀點</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>完整研究報告</li><li>投資建議（含風險揭露）</li><li>管理層摘要（1 頁版）</li></ul><div class="out-tags"><span class="out-tag">Report</span><span class="out-tag">PDF</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">4</div>
+        <div class="scn-title"><h4>法務文件生成 Agent</h4><p>法務需撰寫合約或條款文件</p></div>
+        <div class="scn-roi">需求 → 合約草稿</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>合約模板</li><li>法規條文</li><li>業務需求</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>套用標準條款</li><li>自動調整內容</li><li>標記風險條款</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>合約草稿</li><li>風險提示</li><li>修訂版本比較</li></ul><div class="out-tags"><span class="out-tag">Word</span><span class="out-tag">PDF</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">5</div>
+        <div class="scn-title"><h4>法規整理 + 本行制度對齊 Agent <span class="feat-tag">關鍵</span></h4><p>金管會發布新規，需快速檢視對內部制度的影響</p></div>
+        <div class="scn-roi">新規 → Gap 分析</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>法規文件（PDF）</li><li>內部制度</li><li>SOP 文件</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>解析法規重點</li><li>對照內部制度</li><li>找出差異（Gap）</li><li>評估風險</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>Gap Analysis 報告</li><li>制度修改建議</li><li>影響部門清單</li></ul><div class="out-tags"><span class="out-tag">Report</span><span class="out-tag">PDF</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">6</div>
+        <div class="scn-title"><h4>營運管理洞察 Agent（分行／理專）</h4><p>總行監控分行與理專績效</p></div>
+        <div class="scn-roi">數據 → 改善方案</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>分行業績</li><li>客戶 AUM</li><li>理專銷售數據</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>分析績效差異</li><li>偵測異常（低產出／高流失）</li><li>找交叉銷售機會</li><li>建議改善策略</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>營運分析報表</li><li>問題診斷</li><li>可執行改善方案</li></ul><div class="out-tags"><span class="out-tag">Dashboard</span><span class="out-tag">Excel</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">7</div>
+        <div class="scn-title"><h4>理專輔助／客戶互動 Agent</h4><p>理專需要快速回覆客戶並提供合規建議</p></div>
+        <div class="scn-roi">客戶資料 → 合規話術</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>客戶資產資料</li><li>投資偏好</li><li>市場資訊</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>判斷風險等級</li><li>推薦適合商品</li><li>生成溝通話術（合規）</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>客戶回覆內容</li><li>投資建議草稿</li><li>商品組合建議</li></ul><div class="out-tags"><span class="out-tag">話術</span><span class="out-tag">建議書</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scn">
+      <div class="scn-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="scn-num">8</div>
+        <div class="scn-title"><h4>金融 IT 開發／維運 Agent</h4><p>IT 團隊開發或維護交易與內部系統</p></div>
+        <div class="scn-roi">Bug → 修復方案</div>
+        <svg class="scn-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="scn-body">
+        <div class="flow">
+          <div class="flow-col in"><div class="lbl">Input 輸入</div><ul><li>API 文件</li><li>系統架構文件</li><li>Bug 描述</li><li>程式碼</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col agent"><div class="lbl">AI Agent 執行</div><ul><li>理解系統邏輯</li><li>生成程式碼</li><li>Debug 與優化</li><li>分析效能瓶頸</li></ul></div>
+          <div class="flow-arr">→</div>
+          <div class="flow-col out"><div class="lbl">Output 成果</div><ul><li>程式碼</li><li>修復方案</li><li>技術文件</li></ul><div class="out-tags"><span class="out-tag">Code</span><span class="out-tag">API</span></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div><!-- /group fin -->
+
+  <div class="cta-band">
+    <h2>開始打造你的 AI 員工</h2>
+    <p>把第一份文件交給代理，看它在十分鐘內完成原本要兩天的工作。</p>
+    <div class="cta-btns">
+      <button class="cta-btn primary">預約 Demo</button>
+      <button class="cta-btn ghost">查看部署方案</button>
+    </div>
+  </div>
+
+  </div><!-- /panel3 -->
+
   <footer>
     <div class="brand">OrientAI by TPIsoftware</div>
     <div class="tagline">安全 · 在地 · 即用</div>
@@ -779,6 +1245,17 @@ document.querySelectorAll('.tab').forEach(function(btn){
     btn.classList.add('active');
     document.getElementById(btn.dataset.panel).classList.add('active');
     window.scrollTo({top:0});
+  });
+});
+
+document.querySelectorAll('.ind-card[data-ind]').forEach(function(card){
+  card.addEventListener('click',function(){
+    document.querySelectorAll('.ind-card').forEach(function(c){c.classList.remove('active')});
+    card.classList.add('active');
+    var ind=card.dataset.ind;
+    document.querySelectorAll('.ind-group').forEach(function(g){
+      g.style.display = (g.dataset.group===ind) ? 'block' : 'none';
+    });
   });
 });
 </script>
