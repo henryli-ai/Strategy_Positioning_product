@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrientAI 戰略總覽 | 產品架構 × 市場全景</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1A1530;--body:#3A3550;--muted:#76728A;
+  --accent:#6C4CF1;--accent-deep:#4A2FD0;
+  --lavender:#F4F1FD;--hairline:#EAE7F4;--amber:#B98A1E;--paper:#FFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans TC','Sen',sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 32px 80px}
+.eyebrow{font-family:'Sen',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:clamp(24px,3.2vw,38px);font-weight:900;line-height:1.45;letter-spacing:.01em}
+h1 em{font-style:normal;color:var(--accent-deep)}
+.sub{margin-top:14px;max-width:860px;color:var(--muted);font-size:15px}
+.sub strong{color:var(--ink);font-weight:700}
+.section-title{font-family:'Sen','Noto Sans TC',sans-serif;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);font-weight:700;margin:56px 0 18px}
+.section-note{font-size:12.5px;color:var(--muted);margin:-12px 0 18px;max-width:860px}
+
+/* ---------- tabs ---------- */
+.tabs{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+  display:flex;gap:4px;margin:36px 0 0;border-bottom:2px solid var(--hairline);
+}
+.tab{
+  font-family:'Sen','Noto Sans TC',sans-serif;font-size:14px;font-weight:700;
+  color:var(--muted);background:none;border:none;cursor:pointer;
+  padding:14px 22px;position:relative;letter-spacing:.04em;
+}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--accent-deep)}
+.tab.active::after{
+  content:'';position:absolute;left:12px;right:12px;bottom:-2px;height:3px;
+  background:var(--accent);border-radius:3px 3px 0 0;
+}
+.panel{display:none;padding-top:8px}
+.panel.active{display:block}
+
+/* ---------- duo cards ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:40px}
+.duo-card{border:1px solid var(--hairline);border-radius:16px;padding:30px 28px;display:flex;flex-direction:column}
+.duo-card.ent{background:var(--lavender);border-color:#D5C9F8}
+.duo-card .line{font-family:'Sen',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px}
+.duo-card.ent .line{color:var(--accent-deep)}
+.duo-card h2{font-family:'Sen','Noto Sans TC',sans-serif;font-size:22px;font-weight:900}
+.duo-card .claim{font-size:26px;font-weight:900;margin:16px 0 4px;line-height:1.5}
+.duo-card .claim b{color:var(--accent-deep)}
+.duo-card .sells{font-size:13px;color:var(--muted);margin-bottom:18px}
+.duo-card ul{list-style:none}
+.duo-card li{padding-left:14px;position:relative;margin-bottom:8px;font-size:13.5px;color:var(--body)}
+.duo-card li b{color:var(--ink)}
+.duo-card li::before{content:'';position:absolute;left:0;top:.65em;width:5px;height:5px;border-radius:50%;background:#B7A6F4}
+.duo-card.ent li::before{background:var(--accent)}
+.duo-card .buyer{margin-top:auto;padding-top:16px;border-top:1px dashed #D9D4EC;font-size:12.5px;color:var(--muted)}
+.duo-card .buyer b{color:var(--ink)}
+.bridge{grid-column:1/-1;text-align:center;font-size:13.5px;color:var(--accent-deep);font-weight:700;background:var(--paper);border:1px dashed #C9BCF7;border-radius:99px;padding:12px 20px}
+
+/* ---------- ladder ---------- */
+.ladder{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:stretch}
+.rung{border:1px solid var(--hairline);border-radius:16px;padding:26px 24px;background:var(--paper);display:flex;flex-direction:column}
+.rung:nth-child(2){background:linear-gradient(180deg,#FBFAFE 0%,#FFF 100%)}
+.rung:nth-child(3){background:var(--lavender);border-color:#D5C9F8}
+.rung .step{font-family:'Sen',sans-serif;font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.2em;margin-bottom:10px}
+.rung h3{font-size:17px;font-weight:900;line-height:1.45}
+.rung .hw{display:inline-block;margin:10px 0 14px;font-family:'Sen','Noto Sans TC',sans-serif;font-size:11.5px;font-weight:700;color:var(--accent-deep);background:var(--paper);border:1px solid #D5C9F8;border-radius:99px;padding:4px 12px;letter-spacing:.04em;align-self:flex-start}
+.rung dl{font-size:12.5px;margin-bottom:16px}
+.rung dt{font-weight:700;color:var(--muted);font-size:11px;letter-spacing:.1em;margin-top:11px;text-transform:uppercase;font-family:'Sen','Noto Sans TC',sans-serif}
+.rung dd{color:var(--body);margin-top:2px}
+.rung .pitch{margin-top:auto;padding:12px 14px;background:var(--paper);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;font-size:12.5px;font-weight:700;color:var(--ink);box-shadow:0 1px 4px rgba(26,21,48,.05)}
+
+/* ---------- generic tables ---------- */
+.table-scroll{overflow-x:auto;border:1px solid var(--hairline);border-radius:14px;margin-bottom:8px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;table-layout:fixed}
+thead th{font-family:'Sen','Noto Sans TC',sans-serif;text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:13px 14px;border-bottom:2px solid var(--ink);background:var(--paper)}
+tbody td{padding:13px 14px;vertical-align:top;border-bottom:1px solid var(--hairline);color:var(--body);line-height:1.6}
+tbody tr:last-child td{border-bottom:none}
+td .who{font-size:13.5px;font-weight:900;color:var(--ink);display:block}
+td .org{font-size:11px;color:var(--muted);display:block;margin-top:1px}
+td ul{list-style:none}
+td li{padding-left:12px;position:relative;margin-bottom:3px}
+td li::before{content:'';position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:#B7A6F4}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;border-radius:99px;padding:4px 13px;letter-spacing:.04em}
+.pill.ex{background:#EFEAFE;color:var(--accent-deep)}
+.pill.en{background:var(--accent);color:#fff}
+td .hwnote{display:block;font-size:11px;color:var(--muted);margin-top:5px}
+td.msg{font-weight:700;color:var(--ink);font-size:12.5px}
+.route{font-family:'Sen',sans-serif;font-weight:800;font-size:13px}
+.route.yes{color:var(--accent-deep)}
+.route.semi{color:var(--amber)}
+.route.no{color:#B9B5C9}
+.mk{font-family:'Sen',sans-serif;font-weight:800;font-size:13px;display:inline-block;margin-right:6px}
+.mk.ok{color:var(--accent-deep)}
+.mk.part{color:var(--amber)}
+.mk.no{color:#B9B5C9}
+td .cap{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
+
+/* ---------- capacity summary table ---------- */
+.cap-table{border:1px solid var(--hairline);border-radius:14px;overflow:hidden}
+.cap-row{display:grid;grid-template-columns:1.3fr .9fr .9fr 1.05fr 1.15fr;align-items:center}
+.cap-row+.cap-row{border-top:1px solid var(--hairline)}
+.cap-head{background:#FAF9FD}
+.cap-head .cap-model,.cap-head .cap-cell{
+  font-family:'Sen','Noto Sans TC',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.04em;color:var(--muted);text-transform:none;padding:14px 12px;
+}
+.cap-head .cap-cell{text-align:center;flex-direction:column;line-height:1.4}
+.cap-head .cap-cell span{display:block;font-size:10.5px;font-weight:500;color:#9D99AE;margin-top:3px}
+.cap-model{padding:15px 16px;font-size:14px;font-weight:700;color:var(--ink)}
+.cap-cell{padding:13px 16px;display:flex;align-items:center;justify-content:center;min-height:50px}
+.cap-cell.hot{background:var(--lavender)}
+.cap-cell.hot2{background:#E3D8FA}
+.cap-head .cap-cell.hot{background:#EDE7FB;color:var(--accent-deep)}
+.cap-head .cap-cell.hot2{background:#D9C9F6;color:var(--accent-deep)}
+.cap-head .cap-cell.hot span,.cap-head .cap-cell.hot2 span{color:var(--accent-deep);opacity:.75}
+.cap-star{background:#FBFAFE}
+.cap-star .cap-model{color:var(--accent-deep);font-weight:900}
+.cap-star .cap-cell.hot{background:#DDD0F7}
+.cap-star .cap-cell.hot2{background:#CBB6F2}
+.cap-table .mk{font-size:19px;margin:0}
+.mk.star{color:#7B4FE8;font-size:20px}
+.cap-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:12.5px;color:var(--muted);align-items:center}
+.cap-legend .mk{font-size:15px;margin-right:4px}
+.cap-story{display:flex;align-items:stretch;gap:14px;margin-top:18px}
+.cap-step{flex:1;background:var(--lavender);border:1px solid #D5C9F8;border-radius:12px;padding:16px 18px}
+.cap-step b{display:block;font-size:14px;font-weight:900;color:var(--accent-deep);margin-bottom:4px}
+.cap-step span{font-size:12.5px;color:var(--body)}
+.cap-step.arrow{flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:none;border:none;font-size:24px;font-weight:800;color:var(--accent);padding:0 4px}
+
+.detail-toggle{
+  display:inline-flex;align-items:center;gap:8px;margin-top:22px;cursor:pointer;
+  font-family:'Sen','Noto Sans TC',sans-serif;font-size:13px;font-weight:700;
+  color:var(--accent-deep);background:var(--paper);border:1px solid #D5C9F8;
+  border-radius:99px;padding:10px 20px;transition:background .15s;
+}
+.detail-toggle:hover{background:var(--lavender)}
+.detail-toggle svg{transition:transform .2s}
+.detail-toggle.open svg{transform:rotate(180deg)}
+
+@media(max-width:680px){
+  .cap-row{grid-template-columns:1.3fr .8fr .8fr .95fr 1.05fr}
+  .cap-model{font-size:11.5px;padding:13px 10px}
+  .cap-cell{padding:11px 8px}
+  .cap-head .cap-cell span{display:none}
+  .cap-story{flex-direction:column}
+  .cap-step.arrow{transform:rotate(90deg)}
+}
+tr.hero-row td{background:var(--lavender);border-top:2px solid var(--accent);border-bottom:2px solid var(--accent)}
+tr.hero-row td:first-child{border-left:4px solid var(--accent)}
+
+/* ---------- layer stack ---------- */
+.layers{display:flex;flex-direction:column;gap:10px}
+.layer{
+  display:grid;grid-template-columns:200px 1fr 1fr;gap:18px;
+  border:1px solid var(--hairline);border-radius:14px;padding:20px 22px;align-items:start;
+}
+.layer.hot{background:var(--lavender);border-color:#D5C9F8}
+.layer .lt{font-family:'Sen','Noto Sans TC',sans-serif}
+.layer .lt .no{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:.2em}
+.layer .lt h4{font-size:15px;font-weight:900;margin-top:4px;line-height:1.5}
+.layer .players{font-size:12px;color:var(--muted)}
+.layer .players b{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-family:'Sen','Noto Sans TC',sans-serif}
+.layer .read{font-size:12.5px;color:var(--body)}
+.layer .read b{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:4px;font-family:'Sen','Noto Sans TC',sans-serif}
+
+/* ---------- positioning banner ---------- */
+.posit{
+  background:linear-gradient(135deg,#F7F4FE 0%,#EFEAFE 100%);
+  border:1px solid #D5C9F8;border-radius:18px;padding:36px 34px;margin-top:8px;
+}
+.posit .k{font-family:'Sen',sans-serif;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-deep);font-weight:800;margin-bottom:12px}
+.posit h2{font-size:clamp(19px,2.4vw,26px);font-weight:900;line-height:1.6}
+.posit h2 em{font-style:normal;color:var(--accent-deep)}
+.posit p{margin-top:12px;font-size:13.5px;color:var(--body);max-width:880px}
+.threes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:14px;overflow:hidden}
+.th3{background:var(--paper);padding:26px 24px}
+.th3 .num{font-family:'Sen',sans-serif;font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.2em;margin-bottom:10px}
+.th3 h3{font-size:15.5px;font-weight:900;margin-bottom:8px;line-height:1.55}
+.th3 p{font-size:12.5px;color:var(--muted)}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.kpi{font-size:12px;font-weight:700;color:var(--accent-deep);background:var(--paper);border:1px solid #D5C9F8;border-radius:99px;padding:6px 14px}
+
+footer{margin-top:64px;display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--hairline);padding-top:22px}
+footer .brand{font-family:'Sen',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em}
+footer .tagline{font-size:13px;color:var(--accent-deep);font-weight:700;letter-spacing:.32em}
+
+@media(max-width:900px){
+  .wrap{padding:36px 16px 60px}
+  .duo,.ladder,.threes{grid-template-columns:1fr}
+  .layer{grid-template-columns:1fr}
+  .tabs{overflow-x:auto}
+  table{min-width:900px}
+  footer{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">OrientAI Strategy Hub · TPIsoftware</div>
+  <h1>資料留在地端，智力接軌<em>雲端</em>。</h1>
+  <p class="sub">OrientAI 是<strong>安全的地端 Agentic 軟硬整合平台</strong>——機敏任務跑在企業可控環境，前沿推理智慧路由至全球最強模型。<br><strong>安全與智力，不必二選一。</strong></p>
+
+  <div class="tabs">
+    <button class="tab active" data-panel="p1">產品線切分</button>
+    <button class="tab" data-panel="p2">市場全景與競爭分析</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PANEL 1: PRODUCT ARCHITECTURE                                 -->
+  <!-- ============================================================ -->
+  <div class="panel active" id="p1">
+
+  <div class="duo">
+    <div class="duo-card">
+      <div class="line">OrientAI Express</div>
+      <h2>開機即用的 AI 代理</h2>
+      <div class="claim">文件放進去，<b>代理長出來</b></div>
+      <div class="sells">為沒有 AI 團隊的組織而生：不需設定、不需工程師、不需上雲</div>
+      <ul>
+        <li><b>拖拉即建：</b>PDF、Word、SOP 匯入即成知識代理，回答附來源引用</li>
+        <li><b>會答也會交件：</b>依企業知識生成報價單、制式報告、會議紀要與對外文件——從回答問題到產出成品</li>
+        <li><b>資料不離機：</b>主機放在公司，機密就留在公司</li>
+        <li><b>智慧路由內建：</b>敏感任務留地端，前沿推理可政策性接上雲端模型，無感切換</li>
+        <li><b>當天交付：</b>從開箱到第一個代理上線，一個工作天內</li>
+        <li><b>升級就緒：</b>建好的代理與知識庫，可原封不動納入 Enterprise 治理</li>
+      </ul>
+      <div class="buyer"><b>買家：</b>中小企業經營者、資訊負責人；中大型企業的試點採購單位｜<b>場景：</b>客服問答、內規查詢、報價單與制式報告產出、部門知識庫</div>
+    </div>
+
+    <div class="duo-card ent">
+      <div class="line">OrientAI Enterprise</div>
+      <h2>可治理的多代理平台</h2>
+      <div class="claim">百個代理，<b>一個治理中樞</b></div>
+      <div class="sells">為代理規模化而生：知識庫、客服、流程、部門代理同台納管</div>
+      <ul>
+        <li><b>註冊審核上架：</b>每個 Agent 與 Skill 都經註冊、安全審查、簽核才進入市集——像企業內的應用商店，只有白名單能上架</li>
+        <li><b>受控自助領用：</b>員工從市集申請、主管核准、到期自動回收，啟用全程留痕</li>
+        <li><b>成本全景可視：</b>部門／專案／代理三層 Token 配額，超量告警、自動限流</li>
+        <li><b>稽核就緒：</b>每次工具調用的參數與決策完整留存，合規報告一鍵匯出</li>
+        <li><b>路由政策化：</b>哪類資料可上雲、哪類只能留地端，由企業政策定義而非個人判斷</li>
+      </ul>
+      <div class="buyer"><b>買家：</b>CIO、CISO、法遵長；受監理或高資安要求的中大型企業｜<b>痛點：</b>代理在各部門快速增生之後，安全與成本誰負責</div>
+    </div>
+
+    <div class="bridge">升級路徑：Express 像單機版，Enterprise 像加入公司網域——同一個代理核心，加入後 IT 才看得到、管得住、收得回</div>
+  </div>
+
+  <div class="section-title">Deployment Ladder｜軟硬整合三階梯：模型大小 × 併發數 × 治理深度</div>
+  <div class="ladder">
+    <div class="rung">
+      <div class="step">TIER 1</div>
+      <h3>Express × AI PC</h3>
+      <span class="hw">GB10 · 128GB 統一記憶體</span>
+      <dl>
+        <dt>承載能力</dt><dd>70B～120B 級量化模型｜5–20 人併發</dd>
+        <dt>適用對象</dt><dd>中小企業整體導入；中大型企業單點試辦</dd>
+        <dt>主訴求</dt><dd>開機即用、資料不離機、零 IT 依賴</dd>
+      </dl>
+      <div class="pitch">「一台機器、一個工作天——會回答 SOP，也會產出報價單的 AI 代理。」</div>
+    </div>
+    <div class="rung">
+      <div class="step">TIER 2</div>
+      <h3>Enterprise × AISO Server</h3>
+      <span class="hw">RTX PRO 6000 Server Ed. ×4 · 384GB VRAM</span>
+      <dl>
+        <dt>承載能力</dt><dd>70B 高併發或 200B+ 量化｜100–500 人</dd>
+        <dt>適用對象</dt><dd>多代理上線、需統一納管的中大型企業</dd>
+        <dt>主訴求</dt><dd>註冊審核、受控領用、配額與稽核閉環</dd>
+      </dl>
+      <div class="pitch">「代理開始變多了——上架要審核、啟用要核准、消耗要看得見。」</div>
+    </div>
+    <div class="rung">
+      <div class="step">TIER 3</div>
+      <h3>Enterprise × AISO Server</h3>
+      <span class="hw">RTX PRO 6000 Server Ed. ×8 + aiDAPTIV+ · 768GB↑</span>
+      <dl>
+        <dt>承載能力</dt><dd>400B+ 級開源旗艦模型｜全公司併發</dd>
+        <dt>適用對象</dt><dd>金融、保險、公部門等受監理產業</dd>
+        <dt>主訴求</dt><dd>法遵級：不可篡改稽核、合規匯出、HA</dd>
+      </dl>
+      <div class="pitch">「敢給監理機關看的 AI——稽核拿得出紀錄，監理交代得過去。」</div>
+    </div>
+  </div>
+
+  <div class="section-title">Go-to-Market｜兩條導入路徑：有算力裝軟體，沒算力軟硬一起來</div>
+  <p class="section-note">不論客戶基礎設施現況如何，都有對應的進場方式——平台是同一套，差別只在誰提供算力。Express 或 Enterprise 依需求選定，與導入路徑互相獨立。</p>
+  <div class="duo" style="margin-top:0">
+    <div class="duo-card">
+      <div class="line">Path A · 客戶已有 AI 算力</div>
+      <h2>軟體授權 + 專業導入</h2>
+      <div class="claim">你的機器，<b>我們的平台</b></div>
+      <div class="sells">以 SI 顧問模式進場：在客戶既有 AI Server / GPU 環境部署 OrientAI</div>
+      <ul>
+        <li><b>環境評估：</b>既有 GPU 算力盤點、模型承載規劃、相容性驗證</li>
+        <li><b>平台部署：</b>Express 或 Enterprise 依需求落地，含路由政策與治理規則設定</li>
+        <li><b>系統整合：</b>由 TPIsoftware 專案開發團隊接手 ERP / CRM / 核心系統的 MCP 串接與客製代理開發</li>
+        <li><b>營收結構：</b>軟體授權年約 + 導入服務 + 後續維運與擴充開發</li>
+      </ul>
+      <div class="buyer"><b>適合：</b>已投資 GPU 基礎設施的企業、集團資訊中心、已有 MIS/開發能量的組織｜<b>競爭優勢：</b>對比純 SI 顧問——他們只有服務，我們有平台 + 服務</div>
+    </div>
+
+    <div class="duo-card ent">
+      <div class="line">Path B · 客戶尚無地端環境</div>
+      <h2>軟硬一體交付</h2>
+      <div class="claim">一張採購單，<b>開機即用</b></div>
+      <div class="sells">平台 + AISO 硬體打包出貨：規格、效能、授權一次到位</div>
+      <ul>
+        <li><b>免規劃負擔：</b>不用自己研究 GPU 規格與模型適配——三階梯對號入座（GB10 / 四卡 / 八卡）</li>
+        <li><b>出廠即優化：</b>模型預載、路由預設、效能調校在出貨前完成，到場插電上線</li>
+        <li><b>單一窗口：</b>硬體保固、平台授權、導入服務同一張合約，權責不分家</li>
+        <li><b>營收結構：</b>硬體毛利 + 平台授權 + 服務，三引擎合一</li>
+      </ul>
+      <div class="buyer"><b>適合：</b>首次導入地端 AI 的中小企業與中型組織、不想養基礎設施團隊的企業｜<b>競爭優勢：</b>對比純軟體平台商——他們賣完軟體，算力問題還是客戶的</div>
+    </div>
+
+    <div class="bridge">同一套平台、兩種進場——客戶有算力就帶平台進去，沒算力就連機器一起帶去；專案開發團隊在兩條路徑都是交付主力</div>
+  </div>
+
+  <div class="section-title">Audience Mapping｜客群 × 需求 × 對應產品線</div>
+  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:22%"><col style="width:29%"><col style="width:21%"><col style="width:28%"></colgroup>
+    <thead><tr><th>客群</th><th>核心需求</th><th>對應產品線</th><th>一句話打中</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="who">中小企業經營者 / 資訊負責人</span><span class="org">50–300 人；無專職 AI 團隊；製造、貿易、服務業</span></td>
+        <td><ul><li>一台機器搞定，預算一次到位</li><li>商業機密與客戶資料不上雲</li><li>沒人力維運，要無感使用</li></ul></td>
+        <td><span class="pill ex">EXPRESS</span><span class="hwnote">+ AI PC（GB10），授權隨機附贈</span></td>
+        <td class="msg">「買一台機器，AI 跟資料都是你的。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">中大型企業試點單位</span><span class="org">數轉辦公室、IT 規劃處；為特定部門場景採購</span></td>
+        <td><ul><li>小規模快速驗證，風險可控</li><li>客服、內規、報價產出等單一場景見效</li><li>試點成果可平移到正式平台</li></ul></td>
+        <td><span class="pill ex">EXPRESS</span><span class="hwnote">試點成功後無痛升級 Enterprise</span></td>
+        <td class="msg">「一個工作天看到成果，試點資產直接帶進正式環境。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">CIO / IT 主管</span><span class="org">跨部門、多代理需求的中大型企業</span></td>
+        <td><ul><li>收編各部門自行長出的 AI 工具</li><li>代理與技能上架前要有安全審查</li><li>權限、成本、版本統一管理</li></ul></td>
+        <td><span class="pill en">ENTERPRISE</span><span class="hwnote">+ AISO Pro 6000 四卡</span></td>
+        <td class="msg">「代理遍地開花之後，你需要一個審核上架、看得到全貌的中樞。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">CISO / 法遵長</span><span class="org">金融、保險、公部門等受監理機構</span></td>
+        <td><ul><li>監理與內稽要求的完整軌跡</li><li>資料主權與在地法遵</li><li>高風險操作人工覆核</li></ul></td>
+        <td><span class="pill en">ENTERPRISE</span><span class="hwnote">+ Pro 6000 八卡 + aiDAPTIV+</span></td>
+        <td class="msg">「安全不是形容詞，是匯出得了的稽核報告。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">已自建 AI 算力的企業</span><span class="org">集團資訊中心、已投資 GPU 的組織；有 MIS／開發能量</span></td>
+        <td><ul><li>既有 GPU 投資要發揮價值</li><li>平台落地 + 核心系統整合</li><li>不想被綁定整套硬體重買</li></ul></td>
+        <td><span class="pill ex">EXPRESS</span> <span class="pill en">ENTERPRISE</span><span class="hwnote">Path A：軟體授權 + SI 顧問式導入，專案團隊接手整合開發</span></td>
+        <td class="msg">「機器你已經有了——我們帶平台和導入團隊進場。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">數位轉型 / 開發團隊</span><span class="org">需串接 ERP、CRM 等核心系統的企業</span></td>
+        <td><ul><li>MCP 串接企業系統，代理能動手做事</li><li>Vibe Coding 讓業務需求快速成形</li><li>多模型路由，不被單一廠商綁定</li></ul></td>
+        <td><span class="pill en">ENTERPRISE</span><span class="hwnote">四卡起，依併發擴充</span></td>
+        <td class="msg">「業務的需求，當天變成 IT 核准過的工具。」</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="section-title">aiDAPTIV+ Advantage｜同一張模型階梯，三種硬體的天花板</div>
+  <p class="section-note">最後一塊拼圖是算力底座。AISO Server 內建群聯 aiDAPTIV+ 多層級記憶體架構，以企業級 Pascari SSD 作為新的 AI 記憶體層級，在 GPU VRAM、系統 RAM 與 NAND Flash 間智慧調度——<b>GPU 卡數不變，有效記憶體變大</b>。下表把開源模型由小到大排開，看著同一個模型如何<b>從碰不到，到駕馭得了，再到全面馳騁</b>。</p>
+
+  <!-- 精簡符號表 -->
+  <div class="cap-table">
+    <div class="cap-row cap-head">
+      <div class="cap-model">模型 · 由小到大</div>
+      <div class="cap-cell">AI PC<span>GB10 · 128GB</span></div>
+      <div class="cap-cell">AI Server 四卡<span>PRO 6000 · 384GB</span></div>
+      <div class="cap-cell hot">四卡 + aiDAPTIV+<span>駕馭</span></div>
+      <div class="cap-cell hot2">八卡 + aiDAPTIV+<span>全面馳騁</span></div>
+    </div>
+    <div class="cap-row"><div class="cap-model">8B 輕量</div><div class="cap-cell"><span class="mk ok">✓</span></div><div class="cap-cell"><span class="mk ok">✓</span></div><div class="cap-cell hot"><span class="mk ok">✓</span></div><div class="cap-cell hot2"><span class="mk star">★</span></div></div>
+    <div class="cap-row"><div class="cap-model">32B 部門主力</div><div class="cap-cell"><span class="mk ok">✓</span></div><div class="cap-cell"><span class="mk ok">✓</span></div><div class="cap-cell hot"><span class="mk ok">✓</span></div><div class="cap-cell hot2"><span class="mk star">★</span></div></div>
+    <div class="cap-row"><div class="cap-model">70B 旗艦</div><div class="cap-cell"><span class="mk ok">✓</span></div><div class="cap-cell"><span class="mk ok">✓</span></div><div class="cap-cell hot"><span class="mk ok">✓</span></div><div class="cap-cell hot2"><span class="mk star">★</span></div></div>
+    <div class="cap-row"><div class="cap-model">120B MoE</div><div class="cap-cell"><span class="mk no">✗</span></div><div class="cap-cell"><span class="mk ok">✓</span></div><div class="cap-cell hot"><span class="mk ok">✓</span></div><div class="cap-cell hot2"><span class="mk star">★</span></div></div>
+    <div class="cap-row"><div class="cap-model">235B 中文最強</div><div class="cap-cell"><span class="mk no">✗</span></div><div class="cap-cell"><span class="mk part">△</span></div><div class="cap-cell hot"><span class="mk ok">✓</span></div><div class="cap-cell hot2"><span class="mk star">★</span></div></div>
+    <div class="cap-row"><div class="cap-model">405B 超大杯</div><div class="cap-cell"><span class="mk no">✗</span></div><div class="cap-cell"><span class="mk no">✗</span></div><div class="cap-cell hot"><span class="mk ok">✓</span></div><div class="cap-cell hot2"><span class="mk star">★</span></div></div>
+    <div class="cap-row cap-star"><div class="cap-model">671B 推理王者</div><div class="cap-cell"><span class="mk no">✗</span></div><div class="cap-cell"><span class="mk no">✗</span></div><div class="cap-cell hot"><span class="mk ok">✓</span></div><div class="cap-cell hot2"><span class="mk star">★</span></div></div>
+  </div>
+  <div class="cap-legend"><span><span class="mk ok">✓</span> 單實例可服務</span><span><span class="mk part">△</span> 可載但受限</span><span><span class="mk no">✗</span> 裝不下</span><span><span class="mk star">★</span> 生產級規模：多實例高併發 + 同機微調</span></div>
+  <div class="cap-story">
+    <div class="cap-step"><b>解鎖</b><span>四卡疊加 aiDAPTIV+，405B、671B 從 OOM 變成可上線——碰得到原本碰不到的頂級大模型</span></div>
+    <div class="cap-step arrow">→</div>
+    <div class="cap-step"><b>駕馭</b><span>長上下文、高併發、單實例穩定服務——大模型成為你生產環境裡能掌控的工具</span></div>
+    <div class="cap-step arrow">→</div>
+    <div class="cap-step"><b>全面馳騁</b><span>八卡加倍記憶體與算力：同一個旗艦模型多實例服務全公司，還能同時跑微調與推論</span></div>
+  </div>
+
+  <!-- 展開細節按鈕 -->
+  <button class="detail-toggle" onclick="var d=document.getElementById('cap-detail');var o=this.classList.toggle('open');d.style.display=o?'block':'none';this.querySelector('span').textContent=o?'收合詳細規格與技術說明':'展開詳細規格與技術說明';">
+    <span>展開詳細規格與技術說明</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
+
+  <div id="cap-detail" style="display:none">
+  <div class="table-scroll" style="margin-top:14px">
+  <table>
+    <colgroup><col style="width:16%"><col style="width:10%"><col style="width:17%"><col style="width:18%"><col style="width:19%"><col style="width:20%"></colgroup>
+    <thead><tr><th>開源模型 · 由小到大</th><th>權重需求</th><th>AI PC<br>GB10 · 128GB</th><th>AI Server 四卡<br>PRO 6000 · 384GB</th><th>四卡 + aiDAPTIV+<br>駕馭</th><th>八卡 + aiDAPTIV+<br>全面馳騁</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="who">Llama 3.1 8B / Qwen3 8B</span><span class="org">輕量問答、單一任務代理</span></td>
+        <td>4-bit 約 5GB</td>
+        <td><span class="mk ok">✓</span>流暢<span class="cap">多個代理可同機並跑</span></td>
+        <td><span class="mk ok">✓</span>海量併發</td>
+        <td><span class="mk ok">✓</span>海量併發</td>
+        <td><span class="mk star">★</span>整機資源解放給更多代理與更高吞吐<span class="cap">適合全公司級代理叢集</span></td>
+      </tr>
+      <tr>
+        <td><span class="who">Qwen3 32B / Gemma 3 27B</span><span class="org">部門知識庫主力</span></td>
+        <td>4-bit 約 18–20GB</td>
+        <td><span class="mk ok">✓</span>順跑<span class="cap">中等併發，部門場景甜蜜點</span></td>
+        <td><span class="mk ok">✓</span>FP16 全精度高併發</td>
+        <td><span class="mk ok">✓</span>FP16 高併發 + 超長上下文</td>
+        <td><span class="mk star">★</span>多模型同台：知識庫、客服、流程代理各據其位<span class="cap">部門模型互不爭搶資源</span></td>
+      </tr>
+      <tr>
+        <td><span class="who">Llama 3.3 70B</span><span class="org">通用旗艦、微調主力</span></td>
+        <td>4-bit 約 40GB<br>FP16 約 140GB</td>
+        <td><span class="mk ok">✓</span>量化可跑<span class="cap">5–20 人併發上限</span></td>
+        <td><span class="mk ok">✓</span>FP16 可服務<span class="cap">長上下文＋多人時 KV cache 吃緊</span></td>
+        <td><span class="mk ok">✓</span>長上下文＋高併發並存<span class="cap">KV 分頁至 SSD 層；70B 微調為群聯官方驗證等級</span></td>
+        <td><span class="mk star">★</span>推論服務 + 持續微調同機並行<span class="cap">白天服務、夜間用企業資料再訓練</span></td>
+      </tr>
+      <tr>
+        <td><span class="who">gpt-oss-120B</span><span class="org">OpenAI 開源 MoE</span></td>
+        <td>MoE 量化約 65–80GB</td>
+        <td><span class="mk no">✗</span>裝不下<span class="cap">統一記憶體扣除系統與 KV 餘裕後不足以穩定服務</span></td>
+        <td><span class="mk ok">✓</span>可服務，餘裕中等</td>
+        <td><span class="mk ok">✓</span>餘裕轉為併發<span class="cap">群聯官方測試：DRAM 需求 96GB → 32GB</span></td>
+        <td><span class="mk star">★</span>多實例負載均衡<span class="cap">高併發下延遲穩定</span></td>
+      </tr>
+      <tr>
+        <td><span class="who">Qwen3-235B-A22B</span><span class="org">中文最強開源之一</span></td>
+        <td>4-bit 約 120–140GB</td>
+        <td><span class="mk no">✗</span>裝不下</td>
+        <td><span class="mk part">△</span>可載<span class="cap">併發受限，128K 上下文 KV 空間吃緊</span></td>
+        <td><span class="mk ok">✓</span>128K 上下文＋高併發並存<span class="cap">整本合約、整份年報一次讀完</span></td>
+        <td><span class="mk star">★</span>生產級高併發服務<span class="cap">全集團共用同一個旗艦模型</span></td>
+      </tr>
+      <tr>
+        <td><span class="who">Llama 3.1 405B</span><span class="org">開源超大杯</span></td>
+        <td>4-bit 約 200–230GB</td>
+        <td><span class="mk no">✗</span>裝不下</td>
+        <td><span class="mk no">✗</span>裝不下（OOM）<span class="cap">權重已逼近全部 VRAM，KV cache 無處可放</span></td>
+        <td><span class="mk ok">✓</span>可穩定服務<span class="cap">權重 + KV 分層調度，四卡跑進 400B 俱樂部</span></td>
+        <td><span class="mk star">★</span>多實例 + 餘裕跑 RAG／工具鏈<span class="cap">不需為大模型犧牲周邊服務</span></td>
+      </tr>
+      <tr class="hero-row">
+        <td><span class="who">DeepSeek-R1 671B</span><span class="org">開源推理王者</span></td>
+        <td>4-bit 約 380GB↑</td>
+        <td><span class="mk no">✗</span>裝不下</td>
+        <td><span class="mk no">✗</span>裝不下（OOM）<span class="cap">權重逼近全部 VRAM，KV 無處可放</span></td>
+        <td><span class="mk ok">✓</span><b>解鎖頂級智力</b><span class="cap">同樣四張卡，多一個檔次的模型</span></td>
+        <td><span class="mk star">★</span><b>全面馳騁</b><span class="cap">頂級推理模型多實例服務全公司，仍有餘裕微調</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="section-note" style="margin-top:10px">註：「群聯官方驗證／測試等級」之數據（70B 微調、120B MoE DRAM 降載、aiDAPTIVLink 3.0 TTFT 加速）出自群聯公開新聞稿；其餘容量推估依各模型公開規格之工程估算，正式售前以 AISO 實機效能報告為準。AI Server 欄以 RTX PRO 6000 Server Edition（96GB/卡）配置為前提——Rack Server 亦可配 RTX 6000 Ada（48GB/卡）等選項，報價時須明確綁定卡型，容量論述方能成立。</p>
+  <div class="threes" style="margin-top:18px">
+    <div class="th3">
+      <div class="num">更聰明</div>
+      <h3>模型大一個檔次，能做的事多一個檔次</h3>
+      <p>70B 能做問答摘要；235B/671B 級才扛得起多步驟推理、複雜代理任務與高品質文件產出。同樣四卡，競品卡在 VRAM 天花板，我們多一層記憶體。</p>
+    </div>
+    <div class="th3">
+      <div class="num">更能讀</div>
+      <h3>長上下文不再是奢侈品</h3>
+      <p>KV cache 分頁到高耐久 SSD 層，128K 上下文與多人併發可以並存——整本合約、整批工單一次餵進去，不用切片損失語意。</p>
+    </div>
+    <div class="th3">
+      <div class="num">更快回</div>
+      <h3>上下文保存，重複內容不重算</h3>
+      <p>aiDAPTIVLink 3.0 的 KV 保存與重用機制縮短 TTFT——知識庫代理最常見的「相似問題反覆問」場景，正是受益最大的場景。</p>
+    </div>
+  </div>
+  </div>
+
+  <div class="section-title">Messaging｜核心訊息三層展開</div>
+  <div class="threes">
+    <div class="th3">
+      <div class="num">01 · 主定位</div>
+      <h3>「資料留在地端，智力接軌雲端」</h3>
+      <p>直接拆解客戶的預設恐懼——「要安全就得忍受笨模型」。智慧路由讓機敏任務留在企業內、前沿推理接上全球最強模型。</p>
+    </div>
+    <div class="th3">
+      <div class="num">02 · 對 CIO / CISO</div>
+      <h3>「每個代理與技能，都經註冊審核才上架」</h3>
+      <p>對比開源生態的惡意套件之亂：OrientAI 市集如企業內的應用商店，白名單上架、啟用核准、到期回收。</p>
+    </div>
+    <div class="th3">
+      <div class="num">03 · 品類卡位</div>
+      <h3>「可治理的 Agentic AI 平台」</h3>
+      <p>「龍蝦」留給開場破冰，產品定義用品類詞佔位：「可治理（Governable）」是要在台灣市場佔領的形容詞。</p>
+    </div>
+  </div>
+
+  </div><!-- /panel1 -->
+
+  <!-- ============================================================ -->
+  <!-- PANEL 2: MARKET LANDSCAPE                                     -->
+  <!-- ============================================================ -->
+  <div class="panel" id="p2">
+
+  <div class="section-title" style="margin-top:36px">Battle Strategy｜我們打哪裡、槓桿哪裡</div>
+  <div class="posit" style="margin-top:0">
+    <div class="k">Where We Fight</div>
+    <h2>雲端模型的<em>智力</em>，我們用 Model Routing 槓桿；<br>地端的<em>機敏</em>，我們用主權與治理獨佔。</h2>
+    <p>不是每個對手都要正面打。雲端通用助理（ChatGPT、Claude、Gemini）和 SaaS 巨頭（Microsoft、Salesforce）的模型與生態，我們<b>打不贏也不必打</b>——它們的模型強度反而是我們透過 routing 接進來的資產。真正要贏的戰場是它們碰不到的位置：<b>資料不出企業的地端機敏場景，以及把路由、硬體、治理綁成一套的可採購產品</b>。下方競品由「最該贏」到「不必硬碰」排序。</p>
+    <div class="kpis">
+      <span class="kpi">🎯 主戰場：台灣地端 + 治理</span>
+      <span class="kpi">⚔️ 正面交鋒：雲地混合平台</span>
+      <span class="kpi">🔧 借力：Routing 層</span>
+      <span class="kpi">🤝 槓桿不對決：雲端通用助理</span>
+    </div>
+  </div>
+
+  <div class="section-title">Market Structure｜全球市場五層結構</div>
+  <p class="section-note">以買方實際採購的「產品包裝」為單位盤點代表性產品。結論：成熟的戰場不在「再做一個 Agent Builder」，而在「治理 + 部署彈性 + Model Routing + 成本控制」的控制平面層。層級由下（個人）至上（全公司級系統），但<b>競爭優先序與層級高低無關</b>——見下方排序。</p>
+  <div class="layers">
+    <div class="layer">
+      <div class="lt"><div class="no">LAYER 0</div><h4>雲端通用助理<br>（模型即服務）</h4></div>
+      <div class="players"><b>代表玩家</b>ChatGPT Enterprise、Claude Enterprise、Gemini；OpenAI Frontier</div>
+      <div class="read"><b>對 OrientAI 的意義</b>模型最強、生態最大，但資料進雲、無地端選項。<b>不對決——用 routing 把它們的智力接進來</b>，當客戶問「直接買 ChatGPT 不就好」時，用地端機敏與資料主權切分訴求。</div>
+    </div>
+    <div class="layer">
+      <div class="lt"><div class="no">LAYER 1</div><h4>System-of-Record 型<br>SaaS Agent 套件</h4></div>
+      <div class="players"><b>代表玩家</b>Microsoft、Salesforce、ServiceNow、Oracle、SAP、Workday</div>
+      <div class="read"><b>對 OrientAI 的意義</b>武器是既有流程、資料模型與分發通路，客戶買的是「最短落地路徑」而非路由能力。不正面對撞，打它們做不到的地端主權。</div>
+    </div>
+    <div class="layer hot">
+      <div class="lt"><div class="no">LAYER 2</div><h4>雲地混合控制平面<br>與 Agent 編排平台</h4></div>
+      <div class="players"><b>代表玩家</b>台灣：maiAgent、EgentHub｜國際：IBM、UiPath、Kore.ai、NVIDIA、DataRobot、Red Hat、LangGraph、CrewAI、Dify、n8n</div>
+      <div class="read"><b>對 OrientAI 的意義</b><b>最該贏的主戰場。</b>台灣本地玩家是最直接對手；差異化在「routing × 本地硬體 × 治理」三者綁定——它們多數只有其中一到兩項。</div>
+    </div>
+    <div class="layer hot">
+      <div class="lt"><div class="no">LAYER 3</div><h4>Routing-first<br>AI Gateway 層</h4></div>
+      <div class="players"><b>代表玩家</b>Portkey、LiteLLM、OpenRouter、Not Diamond、Aisera LLM Gateway</div>
+      <div class="read"><b>對 OrientAI 的意義</b>已驗證市場願為路由付費，但多停在 API 層。勝負手：把路由與 AISO 硬體、私有模型、企業治理綁成一套可採購產品。</div>
+    </div>
+    <div class="layer">
+      <div class="lt"><div class="no">LAYER 4</div><h4>Self-hosted Agent<br>個人／小隊 Runtime</h4></div>
+      <div class="players"><b>代表玩家</b>OpenClaw、Hermes Agent、Open WebUI、LibreChat、AnythingLLM</div>
+      <div class="read"><b>對 OrientAI 的意義</b>定義了市場對 agent 的期待：便宜、長駐、會記憶、可自架。這層是病毒擴散入口——Express × AI PC 的對標層。</div>
+    </div>
+  </div>
+
+  <div class="section-title">Competitive Matrix｜競品總表（由最該贏到不必硬碰）</div>
+  <p class="section-note">Route 標記：<span class="route yes">✅</span> 官方明確以動態／條件／成本／故障切換路由為主賣點；<span class="route semi">△</span> 可接多模型或負載均衡但非 routing-first；<span class="route no">—</span> 未見公開強調。價格以官方公開頁為準，未公開者標示之。<b>表格順序＝競爭優先序</b>。</p>
+
+<p class="section-note" style="margin:18px 0 8px"><b>🎯 最該贏。</b>同一張採購案最常相遇，地端、在地、法遵是共同戰場——勝負在治理縱深與算力底座。</p>  <div class="table-scroll" style="border-color:#D5C9F8">
+  <table>
+    <colgroup><col style="width:17%"><col style="width:7%"><col style="width:34%"><col style="width:20%"><col style="width:22%"></colgroup>
+    <thead><tr><th>① 台灣本地玩家 · 最直接對手</th><th>Route</th><th>一句話定位</th><th>目標客群</th><th>公開價格</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who">maiAgent</span><span class="org">思邁智能</span></td><td><span class="route semi">△</span></td><td>高精準 RAG 切入的企業 GenAI 一站式平台：專利 RAG、ISO 27001/27701 雙認證、SaaS／私有雲／地端三模式、AgentOps 監測</td><td>台灣金融保險、製造、醫療、公部門；重知識問答的中大型組織</td><td>未公開，商務報價</td></tr>
+      <tr><td><span class="who">EgentHub</span><span class="org">智慧方案 Intellicon</span></td><td><span class="route semi">△</span></td><td>輕量 Agent 管理 SaaS：公司—工作室—Agent 三層 RBAC、MCP 串接、Prompt Designer、最快 15 分鐘上線</td><td>台灣中小企業與傳產、製造、電商；IT 人力有限的團隊</td><td>未公開，訂閱制</td></tr>
+      <tr><td><span class="who">台灣 SI 顧問</span><span class="org">研華 × D8AI、宇鯨智能等</span></td><td><span class="route no">—</span></td><td>Agent 導入顧問與整合服務：在地經驗、法遵理解、客製整合，無自有平台</td><td>台灣中大型企業 IT 與數轉部門</td><td>專案制報價</td></tr>
+    </tbody>
+  </table>
+  </div>
+<p class="section-note" style="margin:18px 0 8px"><b>⚔️ 正面交鋒。</b>國際控制平面與編排平台；差異化在 routing × 硬體 × 治理三者綁定。</p>  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:17%"><col style="width:7%"><col style="width:34%"><col style="width:20%"><col style="width:22%"></colgroup>
+    <thead><tr><th>② 雲地混合 / 可私有化 · 正面交鋒</th><th>Route</th><th>一句話定位</th><th>目標客群</th><th>公開價格</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who">IBM watsonx Orchestrate</span></td><td><span class="route semi">△</span></td><td>治理目錄 + 控制平面 + 混合部署的企業編排主張</td><td>中大型與大型企業</td><td>Free trial + 分層方案，無單一標價</td></tr>
+      <tr><td><span class="who">UiPath Agent Builder / Maestro</span></td><td><span class="route no">—</span></td><td>Agents、機器人與人協同編排，可自有地端部署</td><td>已用自動化平台的中大型企業</td><td>Basic $25/月起；Standard 商務報價</td></tr>
+      <tr><td><span class="who">Kore.ai Artemis</span></td><td><span class="route semi">△</span></td><td>Model / cloud / data agnostic 的多代理治理與觀測</td><td>CX/EX 導向中大型企業</td><td>未公開，session/usage/seat 彈性</td></tr>
+      <tr><td><span class="who">NVIDIA NeMo / AI-Q</span></td><td><span class="route yes">✅</span></td><td>Intelligent query routing + 多代理研究管線，可跨雲/地端/混合</td><td>大型企業、GPU 基礎設施組織</td><td>依 NVIDIA AI Enterprise 部署模式</td></tr>
+      <tr><td><span class="who">DataRobot Agent Workforce</span></td><td><span class="route semi">△</span></td><td>LLM gateway + edge/cloud/on-prem 部署，accuracy-latency-cost 平衡</td><td>中大型與大型企業</td><td>Premium / 商務報價</td></tr>
+      <tr><td><span class="who">Red Hat OpenShift AI</span></td><td><span class="route no">—</span></td><td>MLOps + AgentOps，跨雲、地端、air-gapped 開放工具鏈</td><td>大型企業、平台工程、受監管環境</td><td>隨 OpenShift 方案商務報價</td></tr>
+      <tr><td><span class="who">LangGraph / LangSmith</span></td><td><span class="route no">—</span></td><td>開源編排框架 + 觀測評測部署，Enterprise 可 self-host</td><td>開發者團隊、產品型企業</td><td>Developer $0；Plus $39/席/月；Enterprise 客製</td></tr>
+      <tr><td><span class="who">CrewAI Enterprise</span></td><td><span class="route no">—</span></td><td>多代理平台 + 視覺編輯器，private infrastructure</td><td>技術團隊、中大型企業</td><td>Free；Enterprise 客製</td></tr>
+      <tr><td><span class="who">Dify</span></td><td><span class="route semi">△</span></td><td>上手快的開源 App Studio：模型廠商管理 + LLM API 負載均衡</td><td>個人開發者、SMB、中型團隊</td><td>自架免費；Pro $59、Team $159/workspace/月</td></tr>
+      <tr><td><span class="who">Flowise</span></td><td><span class="route no">—</span></td><td>開源視覺化多代理平台，100+ 模型與向量庫整合</td><td>技術型 SMB、產品團隊</td><td>OSS 免費；Enterprise 授權未公開</td></tr>
+      <tr><td><span class="who">n8n</span></td><td><span class="route no">—</span></td><td>Workflow 自動化 + AI agents，1000+ 整合可自架</td><td>SMB 到大型企業</td><td>€20 / €50 / €667 / 月；Enterprise 客製</td></tr>
+      <tr><td><span class="who">AnythingLLM</span></td><td><span class="route semi">△</span></td><td>Local-first RAG + agents，桌面到 Docker 多型態</td><td>個人、工作室、SMB</td><td>自架免費；Basic $50、Pro $99/月</td></tr>
+      <tr><td><span class="who">Portkey</span></td><td><span class="route yes">✅</span></td><td>AI Gateway：條件路由、負載均衡、fallback 三策略可巢狀，可 VPC</td><td>成熟 AI 團隊、中大型企業</td><td>自架免費；Production $49/月；Enterprise 客製</td></tr>
+      <tr><td><span class="who">Not Diamond</span></td><td><span class="route yes">✅</span></td><td>學習式選模器：逐請求預測最佳模型，10–100ms 決策、常見 30%+ 省成本</td><td>AI 產品與平台工程團隊</td><td>每月 1 萬次推薦免費；$10/萬次；Enterprise 客製</td></tr>
+    </tbody>
+  </table>
+  </div>
+<p class="section-note" style="margin:18px 0 8px"><b>🔧 借力與對標。</b>Routing 開源工具是借力對象，個人 runtime 是 Express × AI PC 的對標入口。</p>  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:17%"><col style="width:7%"><col style="width:34%"><col style="width:20%"><col style="width:22%"></colgroup>
+    <thead><tr><th>③ 純自架 / 純地端 · 對標入口層</th><th>Route</th><th>一句話定位</th><th>目標客群</th><th>公開價格</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who">LiteLLM</span></td><td><span class="route yes">✅</span></td><td>工程級 AI Gateway：100+ providers、加權/延遲/成本/負載路由與預算控制</td><td>平台工程、企業 Gateway 場景</td><td>OSS 免費；Enterprise 授權客製</td></tr>
+      <tr><td><span class="who">Open WebUI</span></td><td><span class="route semi">△</span></td><td>自架 AI 平台：LDAP/AD/SSO、air-gapped、K8s 部署</td><td>注重主權的 SMB / 企業 IT</td><td>基本版免費；白標與支援另談</td></tr>
+      <tr><td><span class="who">LibreChat</span></td><td><span class="route semi">△</span></td><td>統一多模型介面 + Agents / MCP / RAG，零訂閱</td><td>開發者、技術型小團隊</td><td>免費（MIT）</td></tr>
+      <tr><td><span class="who">OpenClaw</span></td><td><span class="route semi">△</span></td><td>Self-hosted 個人 AI 助理：15+ 通訊平台、瀏覽器自動化、技能生態</td><td>一人工作室、顧問、小團隊</td><td>自架免費；infra $5/月起；Enterprise 客製</td></tr>
+      <tr><td><span class="who">Hermes Agent</span></td><td><span class="route semi">△</span></td><td>長駐 server 的記憶型代理：自動技能生成、subagents、五種沙盒</td><td>一人工作室、研究與技術小組</td><td>開源免費；Portal $0–$200 訂閱閘道</td></tr>
+    </tbody>
+  </table>
+  </div>
+<p class="section-note" style="margin:18px 0 8px"><b>🛡️ 不硬碰。</b>武器是既有流程與分發通路，打它們做不到的地端主權即可。</p>  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:17%"><col style="width:7%"><col style="width:34%"><col style="width:20%"><col style="width:22%"></colgroup>
+    <thead><tr><th>④ 純雲端 SaaS 巨頭 · 不正面對撞</th><th>Route</th><th>一句話定位</th><th>目標客群</th><th>公開價格</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who">Microsoft Copilot Studio</span></td><td><span class="route semi">△</span></td><td>M365 生態原生的 Agent 建置與治理，1,400+ connectors、Purview 治理</td><td>已用 Microsoft 365 的中大型企業</td><td>M365 Copilot NT$965/用戶/月起；另有點數與 PAYG</td></tr>
+      <tr><td><span class="who">Salesforce Agentforce</span></td><td><span class="route semi">△</span></td><td>CRM 原生的多 Agent 編排與信任層，面向客戶與員工代理</td><td>CRM／客服導向中大型企業</td><td>$500/10 萬 Flex Credits；$2/對話；附加 $125/用戶/月起</td></tr>
+      <tr><td><span class="who">ServiceNow AI Agents</span></td><td><span class="route semi">△</span></td><td>AI Agent Studio + Orchestrator + Control Tower，跨部門流程原生</td><td>ITSM/ESM 導向中大型企業</td><td>未公開，隨平台商務報價</td></tr>
+      <tr><td><span class="who">Amazon Bedrock AgentCore</span></td><td><span class="route semi">△</span></td><td>可組裝的 agent 編排與知識庫，AWS 生態用量彈性</td><td>雲原生與平台工程團隊</td><td>Usage-based，按資源耗用秒計</td></tr>
+      <tr><td><span class="who">Oracle AI Agent Studio</span></td><td><span class="route semi">△</span></td><td>Fusion 原生 50+ 預建代理與 agent team 編排</td><td>Oracle Fusion 客戶</td><td>Fusion 客戶無額外費用</td></tr>
+      <tr><td><span class="who">SAP Joule Agents</span></td><td><span class="route semi">△</span></td><td>SAP 流程語意 + Knowledge Graph 的企業流程自動化</td><td>SAP 客戶、中大型企業</td><td>申請報價 / AI Units</td></tr>
+      <tr><td><span class="who">Workday AI Agents</span></td><td><span class="route no">—</span></td><td>Agent System of Record，沿用 Workday 權限與稽核架構</td><td>Workday 客戶（HR/財務）</td><td>Flex Credits 用量計價</td></tr>
+      <tr><td><span class="who">Glean / Moveworks</span></td><td><span class="route semi">△</span></td><td>企業知識代理與員工生產力編排，權限一致、跨應用</td><td>知識密集 / IT-HR 導向大型企業</td><td>未公開，商務報價</td></tr>
+      <tr><td><span class="who">Zendesk / Intercom / HubSpot</span></td><td><span class="route no">—</span></td><td>客服與行銷垂直代理，以結案／對話結果計價</td><td>SMB 到大型客服／成長型企業</td><td>$0.50–0.99/結果；座席 $29–55/月起</td></tr>
+      <tr><td><span class="who">Zoho Zia Agents</span></td><td><span class="route semi">△</span></td><td>低門檻 Agent Studio + Store，BYOM 成本透明</td><td>個人工作室到中型企業</td><td>平台 $0；自家模型每月 3 千萬 tokens 免費</td></tr>
+    </tbody>
+  </table>
+  </div>
+<p class="section-note" style="margin:18px 0 8px"><b>🤝 槓桿不對決。</b>模型最強、資料進雲。當客戶問「直接買 ChatGPT 不就好」——用 routing 接它們的智力、用地端機敏切分訴求。</p>  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:17%"><col style="width:7%"><col style="width:34%"><col style="width:20%"><col style="width:22%"></colgroup>
+    <thead><tr><th>⑤ 雲端通用助理 · 槓桿而非對決</th><th>Route</th><th>一句話定位</th><th>目標客群</th><th>公開價格</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who">ChatGPT Enterprise</span><span class="org">OpenAI</span></td><td><span class="route no">—</span></td><td>最強通用模型 + Agent Mode；2026 另推 Frontier 代理平台。資料進雲、150 席門檻、無地端</td><td>追求最強模型的大型企業；員工生產力場景</td><td>約 $50–60/席/月，150 席起、年約（Go 方案 $35–40 補中型缺口）</td></tr>
+      <tr><td><span class="who">Claude Enterprise</span><span class="org">Anthropic</span></td><td><span class="route no">—</span></td><td>強推理與長上下文、Claude Code 開發代理；seat + 用量計費，雲端 SaaS</td><td>工程與知識密集團隊、重視安全的企業</td><td>技術席 $20／業務席 $10 起 + token 按 API 計，20 席起</td></tr>
+      <tr><td><span class="who">Google Gemini Enterprise</span><span class="org">Google</span></td><td><span class="route semi">△</span></td><td>No-code agents + ADK 自訂代理，Google 生態知識搜尋</td><td>Google Cloud / Workspace 企業</td><td>依 edition 與用量計費，無統一公開價</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+
+  <div class="section-title">Direct Competitors｜直接競爭者正面對比：他們的賣點 vs 我們的差異</div>
+  <p class="section-note">如實列出最常在同一張採購案中相遇的對手。原則：承認對手的強項（客戶一定會聽到），把差異講在他們補不上的位置。</p>
+  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:16%"><col style="width:28%"><col style="width:28%"><col style="width:28%"></colgroup>
+    <thead><tr><th>競爭者</th><th>他們的賣點（要承認的）</th><th>結構性差異</th><th>我們的勝點話術</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="who">maiAgent</span><span class="org">最常正面相遇</span></td>
+        <td><ul><li>專利 RAG、號稱 95% 精準度</li><li>ISO 27001/27701 認證背書</li><li>100+ 客戶實績、多模型切換</li><li>同樣有地端部署選項</li></ul></td>
+        <td><ul><li>強在「知識問答」，Agent 執行與自動化縱深較淺</li><li>AgentOps 是監測，不是審批＋配額＋回收的治理閉環</li><li>純軟體商，無自有算力底座與軟硬整合</li></ul></td>
+        <td class="msg">「看得到（監測）和管得住（治理閉環）是兩回事；而且我們連算力一起交付，TCO 一張合約算得清。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">EgentHub</span><span class="org">中小企業案常遇</span></td>
+        <td><ul><li>最快 15 分鐘上線、200+ 導入案例</li><li>三層 RBAC、MCP 串接</li><li>SaaS 訂閱門檻低、見效快</li></ul></td>
+        <td><ul><li>SaaS 優先——資料主權與法遵故事天生弱</li><li>治理止於權限層，無稽核閉環與成本治理</li><li>新創規模，大型法遵案信任門檻高</li></ul></td>
+        <td class="msg">「上線快我們也做得到（Express 一個工作天）——但他們的快是資料上雲換來的，我們的快資料留在你家。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">台灣 SI 顧問</span><span class="org">研華×D8AI、宇鯨等</span></td>
+        <td><ul><li>第一線導入經驗與在地信任</li><li>硬體夥伴資源、客製能力</li><li>對開源生態（OpenClaw 等）熟悉</li></ul></td>
+        <td><ul><li>無自有平台——治理能力依賴客戶自建或拼裝開源</li><li>專案制、人力規模化受限</li><li>交付後的產品演進無人負責</li></ul></td>
+        <td class="msg">「他們有服務沒平台，我們平台＋服務都有——Path A 就是用他們的打法，帶著自有產品進場。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">Routing 層玩家</span><span class="org">Portkey、LiteLLM 等</span></td>
+        <td><ul><li>路由能力成熟且開源可自架</li><li>工程社群滲透度高</li><li>價格低甚至免費</li></ul></td>
+        <td><ul><li>是 API gateway 不是業務平台——沒有市集、審批、知識代理</li><li>買家是工程師，不是 CIO／業務單位</li><li>不綁硬體、不含導入，落地全靠客戶自己</li></ul></td>
+        <td class="msg">「客戶 IT 若提『用 LiteLLM 自己搭』：可以，但搭完只有水管，沒有水龍頭——上層的代理、治理、導入還是得有人做。」</td>
+      </tr>
+      <tr>
+        <td><span class="who">ChatGPT / Claude 企業版</span><span class="org">老闆最愛問的選項</span></td>
+        <td><ul><li>模型最強、品牌最響</li><li>員工上手快、生態最大</li><li>Agent Mode／Claude Code 能力強</li></ul></td>
+        <td><ul><li>資料必須進雲——金融、公部門、機敏場景的硬傷</li><li>是「員工助理訂閱」，非企業多代理治理平台</li><li>無地端選項、無 RBAC 審批閉環、token 用量難控</li></ul></td>
+        <td class="msg">「它們的模型我們用 routing 接進來就好——但你的合約、客戶名單、內部報價要不要也送進 OpenAI 的雲？地端機敏這塊，它們做不到。」</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="section-title">Routing Deep-dive｜真正把 Model Routing 做成產品的玩家</div>
+  <p class="section-note">主打 routing 的終局問題不是「跟 Copilot Studio 差在哪」，而是「跟 Portkey / LiteLLM / Not Diamond 差在哪」。答案必須是：不只路由 API，而是把路由與本地硬體、資料主權、私有模型、企業治理綁成一個完整產品。</p>
+  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:15%"><col style="width:20%"><col style="width:35%"><col style="width:30%"></colgroup>
+    <thead><tr><th>產品</th><th>路由類型</th><th>具體作法</th><th>對 OrientAI 的啟示</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who">Portkey</span></td><td>規則式 / 組合式</td><td>條件路由、負載均衡、fallback 三策略可互相巢狀；支援 VPC 部署</td><td>治理與可組裝性的標竿；路由政策要能巢狀組合</td></tr>
+      <tr><td><span class="who">LiteLLM</span></td><td>工程導向</td><td>加權、延遲、成本、least-busy 路由；team/key 級路由與 budget routing</td><td>預算即路由變數——配額與路由應是同一套政策引擎</td></tr>
+      <tr><td><span class="who">OpenRouter</span></td><td>供應商路由</td><td>按價格與供應商穩定度做 provider routing + model fallback</td><td>純雲 router 的天花板：做不了私有控制平面，正是地端缺口</td></tr>
+      <tr><td><span class="who">Not Diamond</span></td><td>學習式 / 預測式</td><td>逐輸入預測最佳模型，決策延遲 10–100ms，常見 30%+ 成本節省</td><td>路由智慧化的方向；可作為未來路由引擎的演進參考</td></tr>
+      <tr><td><span class="who">Aisera Gateway</span></td><td>平台內 best-fit</td><td>查詢路由至 best-fit LLM，整合自家與第三方模型</td><td>把路由裝進垂直應用的先例——OrientAI 應裝進治理平台</td></tr>
+      <tr><td><span class="who">NVIDIA AI-Q</span></td><td>Query routing</td><td>智慧選擇資料來源與分析深度，再由多代理產生答案</td><td>高階私有化部署的路由敘事，與 AISO 場景最接近</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="section-title">Hardware × Audience｜硬體產品線 × 客群 × 競品對應</div>
+  <div class="table-scroll">
+  <table>
+    <colgroup><col style="width:15%"><col style="width:21%"><col style="width:24%"><col style="width:18%"><col style="width:22%"></colgroup>
+    <thead><tr><th>產品線</th><th>最適 TA</th><th>優先功能</th><th>建議定價</th><th>主要競品對應</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="who">AI PC</span><span class="org">入門 local 節點（GB10）</span></td>
+        <td>一人工作室、顧問、律所／會計單兵、垂直專家、教育訓練</td>
+        <td><ul><li>本地問答與 RAG、單機向量庫</li><li>本地優先 + 雲端 fallback 路由</li><li>極簡部署、文件產出</li></ul></td>
+        <td>Freemium / BYOM：免費本地版 + 付費工具包與雲端點數</td>
+        <td>OpenClaw、Hermes、Open WebUI、AnythingLLM、Zoho Zia</td>
+      </tr>
+      <tr>
+        <td><span class="who">AI 工作站</span><span class="org">AISO Workstation（≤2 GPU）</span></td>
+        <td>小型工作室、軟體團隊、10–100 人 SMB、法遵敏感中小企業</td>
+        <td><ul><li>多使用者、共享知識庫、基本 RBAC</li><li>local vs cloud 成本／延遲路由</li><li>MCP connector bundle</li></ul></td>
+        <td>節點授權 + 工作空間訂閱年約；單價高於 Dify/n8n，以路由與本地 GPU 撐值</td>
+        <td>Dify、n8n、Flowise、CrewAI、LangGraph、Portkey</td>
+      </tr>
+      <tr>
+        <td><span class="who">AI Server 四卡</span><span class="org">RTX PRO 6000 Server Ed. ×4 · 384GB</span></td>
+        <td>100–1000 人中型企業、部門級 AI CoE、需私有化未達集團級</td>
+        <td><ul><li>多代理編排、中央模型閘道</li><li>成本配額、觀測、稽核</li><li>PII-aware routing 與 cloud burst</li></ul></td>
+        <td>每伺服器／叢集年約 + 導入服務 + Connector 套件；避免純 seat 計價</td>
+        <td>IBM、UiPath、Kore.ai、Aisera、DataRobot、LiteLLM</td>
+      </tr>
+      <tr class="hero-row">
+        <td><span class="who">AI Server 八卡</span><span class="org">RTX PRO 6000 Server Ed. ×8 + aiDAPTIV+</span></td>
+        <td>大型集團、政府、金融、醫療、製造、跨區域多 BU 組織</td>
+        <td><ul><li>多租戶、HA、Agent registry、policy-as-code</li><li>資料地域控制、guardrails</li><li>跨地雲動態路由與 failover、air-gapped</li></ul></td>
+        <td>平台年約 + 專業服務 + SLA + 選配雲端消耗包；賣主權與可控 TCO，不賣便宜</td>
+        <td>ServiceNow、Microsoft、Salesforce、NVIDIA、Red Hat</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="section-title">Strategic Positioning｜定位主張</div>
+  <div class="posit">
+    <div class="k">Recommended Positioning</div>
+    <h2>Sovereign Hybrid Agent <em>Control Plane</em><br>主打 Model Routing：可純地部署、也可雲地混合，把本地 GPU、私有模型、公有模型、連接器、治理與成本控制做成一套可採購產品。</h2>
+    <p>不做「另一個 Agent Builder」——那會正面撞上 Microsoft、Salesforce、ServiceNow、IBM。主流 SaaS 套件綁定各自的 system-of-record，routing-first 產品又多停在 API 層；「路由 × 本地硬體 × 治理」三者深度結合的位置，目前是空的。</p>
+    <div class="kpis">
+      <span class="kpi">本地任務占比</span><span class="kpi">雲端 burst 比例</span><span class="kpi">平均延遲</span><span class="kpi">每任務成本</span><span class="kpi">模型故障切換成功率</span><span class="kpi">PII 任務雲外洩率 = 0</span>
+    </div>
+  </div>
+
+  <div class="section-title">Sales Narrative｜三句話講完產品主張</div>
+  <div class="threes">
+    <div class="th3">
+      <div class="num">第一句</div>
+      <h3>「你不用在公有雲和地端之間二選一。」</h3>
+      <p>企業不是不想上雲，是不想把所有任務都上雲。例行問答、PII、延遲敏感留地端；長文推理、外部搜索、特殊模型再上雲。</p>
+    </div>
+    <div class="th3">
+      <div class="num">第二句</div>
+      <h3>「你不是在選模型，而是在選一個會自動替你選模型的控制平面。」</h3>
+      <p>Portkey、LiteLLM、Not Diamond 已驗證市場願為路由付費——但它們不從企業本地硬體分層出發。路由是硬體的附加價值，不是獨立 API 小工具。</p>
+    </div>
+    <div class="th3">
+      <div class="num">第三句</div>
+      <h3>「你買的不只是 Agent，而是可治理的 AI 產能。」</h3>
+      <p>Salesforce、ServiceNow、Workday 都在轉向 action / credit / outcome 計價——市場要買的是可計價、可觀測、可稽核的工作產出。觀測、RBAC、預算、稽核必須是 Day 1 主產品，不是 roadmap。</p>
+    </div>
+  </div>
+
+  </div><!-- /panel2 -->
+
+  <footer>
+    <div class="brand">OrientAI by TPIsoftware</div>
+    <div class="tagline">安全 · 在地 · 即用</div>
+  </footer>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.panel).classList.add('active');
+    window.scrollTo({top:0});
+  });
+});
+</script>
+</body>
+</html>
